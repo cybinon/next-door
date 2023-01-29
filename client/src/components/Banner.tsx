@@ -13,7 +13,7 @@ export default function Banner() {
       _before={{
         backgroundImage: `url(${banner1.img})`
       }}
-      className='main-banner' minH="100vh">
+      className='main-banner' minH="800px">
       <Container maxW={"container.xl"}>
         <Grid templateColumns={"repeat(12, 1fr)"}>
           <GridItem colSpan={[12, 12, 12, 6]} >

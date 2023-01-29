@@ -1,6 +1,7 @@
 import { Box, useColorMode } from "@chakra-ui/react";
 import Head from "next/head";
 import { useEffect } from "react";
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import AppContextProvider from "./context/AppContext";
 
@@ -23,6 +24,7 @@ export default function Root({ children }: any) {
         <Box minH="100vh">
           <Navbar />
           {children}
+          <Footer />
         </Box>
       </AppContextProvider>
     </>
