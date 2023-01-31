@@ -1,6 +1,5 @@
 import blockContent from './blockContent'
-import category from './category'
 import config from './config'
-import author from './author'
+import service from './service'
 
-export const schemaTypes = [config, blockContent]
+export const schemaTypes = [config, service,blockContent]

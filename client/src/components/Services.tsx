@@ -1,3 +1,4 @@
+import { useApp } from "@/context/AppContext";
 import { Box, Container } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Slider from "react-slick"
@@ -18,6 +19,7 @@ export default function Services() {
     }
   }
   const [settings, setSetting] = useState({})
+  const { services } = useApp()
 
   useEffect(() => {
     console.log(calculateWidth())
@@ -46,41 +48,15 @@ export default function Services() {
         </Box>
         <Box w="100%">
           <Slider {...settings}>
-            <Box padding={"0 5px"}>
-              <Box bg="white" className="item">
-                <h4>Learn More about our Guidelines</h4>
-                <div className="icon"><img src="/images/service-icon-01.png" alt="" /></div>
-                <p>Feel free to use this template for your business</p>
+            {services.map(({ title, description, icon }: any, i: number) =>
+              <Box key={i + title} padding={"0 5px"}>
+                <Box bg="white" className="item">
+                  <h4>{title}</h4>
+                  <div className="icon"><img src={icon} alt="" /></div>
+                  <p>{description}</p>
+                </Box>
               </Box>
-            </Box>
-            <Box padding={"0 5px"}>
-              <Box bg="white" className="item">
-                <h4>Learn More about our Guidelines</h4>
-                <div className="icon"><img src="/images/service-icon-01.png" alt="" /></div>
-                <p>Feel free to use this template for your business</p>
-              </Box>
-            </Box>
-            <Box padding={"0 5px"}>
-              <Box bg="white" className="item">
-                <h4>Learn More about our Guidelines</h4>
-                <div className="icon"><img src="/images/service-icon-01.png" alt="" /></div>
-                <p>Feel free to use this template for your business</p>
-              </Box>
-            </Box>
-            <Box padding={"0 5px"}>
-              <Box bg="white" className="item">
-                <h4>Learn More about our Guidelines</h4>
-                <div className="icon"><img src="/images/service-icon-01.png" alt="" /></div>
-                <p>Feel free to use this template for your business</p>
-              </Box>
-            </Box>
-            <Box padding={"0 5px"}>
-              <Box bg="white" className="item">
-                <h4>Learn More about our Guidelines</h4>
-                <div className="icon"><img src="/images/service-icon-01.png" alt="" /></div>
-                <p>Feel free to use this template for your business</p>
-              </Box>
-            </Box> 
+            )}
           </Slider>
         </Box>
       </Container>

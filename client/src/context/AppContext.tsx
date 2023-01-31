@@ -9,6 +9,7 @@ const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION
 
 export default function AppContextProvider({ children }: any) {
   const [banner1, setBanner1] = useState<{img:string, body:string}>({img:"", body: ""});
+  const [services, setServices] = useState<any[]>([]);
   useEffect(() => {
     const client = createClient({
       projectId,
@@ -28,12 +29,24 @@ export default function AppContextProvider({ children }: any) {
         img: imageBuilder.image(data[0].mainImage).url(),
         body: data[0].body.map((e:any) => e.children[0].text).join(" ")
       })
-    })
+    });
+
+    const query2 = groq`
+    *[_type=="service"]
+    `
+    client.fetch(query2).then(async (data) => {
+      console.log(data);
+      setServices(data.map((e:any) => ({
+        ...e,
+        icon: imageBuilder.image(e.icon).url()
+      })))
+    });
   }, []);
 
   return (
     <AppContext.Provider value={{
-      banner1
+      banner1,
+      services
     }}>
       {children}
     </AppContext.Provider>
