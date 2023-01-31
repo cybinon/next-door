@@ -8,7 +8,8 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION
 
 export default function AppContextProvider({ children }: any) {
-  const [banner1, setBanner1] = useState<{img:string, body:string}>({img:"", body: ""});
+  const [banner1, setBanner1] = useState<{title?: string, img:string, body:string}>({img:"", body: ""});
+  const [banner2, setBanner2] = useState<{title?: string, img:string, body:string}>({img:"", body: ""});
   const [services, setServices] = useState<any[]>([]);
   useEffect(() => {
     const client = createClient({
@@ -27,7 +28,7 @@ export default function AppContextProvider({ children }: any) {
       console.log(data);
       setBanner1({
         img: imageBuilder.image(data[0].mainImage).url(),
-        body: data[0].body.map((e:any) => e.children[0].text).join(" ")
+        body: data[0].body
       })
     });
 
@@ -41,11 +42,24 @@ export default function AppContextProvider({ children }: any) {
         icon: imageBuilder.image(e.icon).url()
       })))
     });
+
+    const query3 = groq`
+    *[slug.current=="banner-2"]
+    `
+    client.fetch(query3).then(async (data) => {
+      console.log(data);
+      setBanner2({
+        title: data[0].title,
+        img: data[0] && imageBuilder.image(data[0].mainImage).url(),
+        body: data[0].body
+      })
+    })
   }, []);
 
   return (
     <AppContext.Provider value={{
       banner1,
+      banner2,
       services
     }}>
       {children}
